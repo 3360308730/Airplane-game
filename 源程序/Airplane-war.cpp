@@ -7,14 +7,6 @@
 IMAGE bk; // ±³¾°Í¼Æ¬
 IMAGE airplane[2]; // Íæ¼Ò·É»úÍ¼Æ¬
 
-void transparentimage(int x, int y, IMAGE image) {
-    IMAGE img1;
-    DWORD* d1;
-    img1 = image;
-    d1 = GetImageBuffer(&img1);
-    float h, s, l;
-}
-
 // Í¼Æ¬³õÊ¼»¯
 void loadImage() {
     loadimage(&bk, "./Resource/background.png"); // ±³¾°Í¼Æ¬³õÊ¼»¯
