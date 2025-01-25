@@ -1,17 +1,23 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include <graphics.h>
+#include <time.h>
 #include <conio.h>
 #include <string.h>
+
+#pragma comment(lib, "MSIMG32.LIB")
+#pragma region definitions
 
 IMAGE bk; // 背景图片
 IMAGE airplane[2]; // 玩家飞机图片
 
+
 // 图片初始化
 void loadImage() {
     loadimage(&bk, "./Resource/background.png"); // 背景图片初始化
-    loadimage(&airplane[0], "./Resource/hero1.png"); //飞机图片初始化
-    loadimage(&airplane[1], "./Resource/hero2.png"); //飞机图片初始化
+    loadimage(&airplane[0], "./Resource/me1.png"); //飞机图片初始化
 }
 
 //贴背景图
@@ -21,11 +27,22 @@ void backgroundDraw() {
     FlushBatchDraw(); 
 }
 
+void transparentimage(IMAGE* dstimg, int x, int y, IMAGE* srcimg)
+{
+    HDC dstDC = GetImageHDC(dstimg);
+    HDC srcDC = GetImageHDC(srcimg);
+    int w = srcimg->getwidth();
+    int h = srcimg->getheight();
+
+    // 结构体的第三个成员表示额外的透明度，0 表示全透明，255 表示不透明。
+    BLENDFUNCTION bf = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+    AlphaBlend(dstDC, x, y, w, h, srcDC, 0, 0, w, h, bf);
+}
+
 //游戏贴图
 void gameDraw() {
     loadImage();
-    putimage(190, 700, &airplane[0], NOTSRCERASE);
-    putimage(190, 700, &airplane[1], SRCINVERT);
+    transparentimage(NULL,190,700 , &airplane[0]);
     FlushBatchDraw();
 }
 
