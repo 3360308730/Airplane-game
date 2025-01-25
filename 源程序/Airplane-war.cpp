@@ -114,5 +114,6 @@ int main() {
     backgroundDraw();
     handleMenu();
     closegraph();
+	printf("Hello World");
     return 0;
 }
